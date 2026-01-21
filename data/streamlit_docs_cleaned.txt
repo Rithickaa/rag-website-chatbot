@@ -1,0 +1,526 @@
+API Reference - Streamlit Docs
+Streamlit makes it easy for you to visualize, mutate, and share data. The API
+reference is organized by activity type, like displaying data or optimizing
+performance. Each section includes methods associated with the activity type,
+Browse our API below and click to learn more about any of our available commands! 🎈
+Write generators or streams to the app with a typewriter effect.
+st.write_stream(my_llm_stream)
+Any time Streamlit sees either a variable or literal value on its own line, it automatically writes that to your app using
+Display string formatted as Markdown.
+st.markdown("Hello **world**!")
+Display text in title formatting.
+Display text in header formatting.
+Display text in subheader formatting.
+st.subheader("This is a subheader")
+Display a small, colored badge.
+st.caption("This is written small caption text")
+Display a code block with optional syntax highlighting.
+Display some code in the app, then execute it. Useful for tutorials.
+st.write('This code will be printed')
+Display mathematical expressions formatted as LaTeX.
+Write fixed-width and preformatted text.
+Display object’s doc string, nicely formatted.
+Renders HTML strings to your app.
+These are featured components created by our lovely community. For more examples and inspiration, check out our
+Add tags to your Streamlit apps. Created by
+st_tags(label='# Enter Keywords:', text='Press enter to add more', value=['Zero', 'One', 'Two'], suggestions=['five', 'six', 'seven', 'eight', 'nine', 'three', 'eleven', 'ten', 'four'], maxtags = 4, key='1')
+Apply text mining on a dataframe. Created by
+nlu.load("sentiment").predict("I love NLU! <3")
+A library with useful Streamlit extras. Created by
+mention(label="An awesome Streamlit App", icon="streamlit",  url="https://extras.streamlit.app",)
+Display annotated text in Streamlit apps. Created by
+annotated_text("This ", ("is", "verb"), " some ", ("annotated", "adj"), ("text", "noun"), " for those of ", ("you", "pronoun"), " who ", ("like", "verb"), " this sort of ", ("thing", "noun"), ".")
+Provides a sketching canvas using
+st_canvas(fill_color="rgba(255, 165, 0, 0.3)", stroke_width=stroke_width, stroke_color=stroke_color, background_color=bg_color, background_image=Image.open(bg_image) if bg_image else None, update_streamlit=realtime_update, height=150, drawing_mode=drawing_mode, point_display_radius=point_display_radius if drawing_mode == 'point' else 0, key="canvas",)
+Add tags to your Streamlit apps. Created by
+st_tags(label='# Enter Keywords:', text='Press enter to add more', value=['Zero', 'One', 'Two'], suggestions=['five', 'six', 'seven', 'eight', 'nine', 'three', 'eleven', 'ten', 'four'], maxtags = 4, key='1')
+Apply text mining on a dataframe. Created by
+nlu.load("sentiment").predict("I love NLU! <3")
+A library with useful Streamlit extras. Created by
+mention(label="An awesome Streamlit App", icon="streamlit",  url="https://extras.streamlit.app",)
+Display annotated text in Streamlit apps. Created by
+annotated_text("This ", ("is", "verb"), " some ", ("annotated", "adj"), ("text", "noun"), " for those of ", ("you", "pronoun"), " who ", ("like", "verb"), " this sort of ", ("thing", "noun"), ".")
+Provides a sketching canvas using
+st_canvas(fill_color="rgba(255, 165, 0, 0.3)", stroke_width=stroke_width, stroke_color=stroke_color, background_color=bg_color, background_image=Image.open(bg_image) if bg_image else None, update_streamlit=realtime_update, height=150, drawing_mode=drawing_mode, point_display_radius=point_display_radius if drawing_mode == 'point' else 0, key="canvas",)
+Add tags to your Streamlit apps. Created by
+st_tags(label='# Enter Keywords:', text='Press enter to add more', value=['Zero', 'One', 'Two'], suggestions=['five', 'six', 'seven', 'eight', 'nine', 'three', 'eleven', 'ten', 'four'], maxtags = 4, key='1')
+Apply text mining on a dataframe. Created by
+nlu.load("sentiment").predict("I love NLU! <3")
+A library with useful Streamlit extras. Created by
+mention(label="An awesome Streamlit App", icon="streamlit",  url="https://extras.streamlit.app",)
+Display a dataframe as an interactive table.
+edited = st.data_editor(df, num_rows="dynamic")
+Configure the display and editing behavior of dataframes and data editors.
+st.column_config.NumberColumn("Price (in USD)", min_value=0, format="$%d")
+Display a metric in big bold font, with an optional indicator of how the metric changed.
+Display object or string as a pretty-printed JSON string.
+These are featured components created by our lovely community. For more examples and inspiration, check out our
+Get the coordinates of clicks on an image. Created by
+from streamlit_image_coordinates import streamlit_image_coordinates
+value = streamlit_image_coordinates("https://placekitten.com/200/300")
+Make Plotly charts interactive!. Created by
+from streamlit_plotly_events import plotly_events
+selected_points = plotly_events(fig)
+A library with useful Streamlit extras. Created by
+from streamlit_extras.metric_cards import style_metric_cards
+col3.metric(label="No Change", value=5000, delta=0)
+Implementation of Ag-Grid component for Streamlit. Created by
+df = pd.DataFrame({'col1': [1, 2, 3], 'col2': [4, 5, 6]})
+grid_return = AgGrid(df, editable=True)
+Streamlit Component for rendering Folium maps. Created by
+m = folium.Map(location=[39.949610, -75.150282], zoom_start=16)
+folium.Marker([39.949610, -75.150282], popup="Liberty Bell", tooltip="Liberty Bell").add_to(m)
+st_data = st_folium(m, width=725)
+Pandas profiling component for Streamlit. Created by
+df = pd.read_csv("https://storage.googleapis.com/tf-datasets/titanic/train.csv")
+Get the coordinates of clicks on an image. Created by
+from streamlit_image_coordinates import streamlit_image_coordinates
+value = streamlit_image_coordinates("https://placekitten.com/200/300")
+Make Plotly charts interactive!. Created by
+from streamlit_plotly_events import plotly_events
+selected_points = plotly_events(fig)
+A library with useful Streamlit extras. Created by
+from streamlit_extras.metric_cards import style_metric_cards
+col3.metric(label="No Change", value=5000, delta=0)
+Implementation of Ag-Grid component for Streamlit. Created by
+df = pd.DataFrame({'col1': [1, 2, 3], 'col2': [4, 5, 6]})
+grid_return = AgGrid(df, editable=True)
+Streamlit Component for rendering Folium maps. Created by
+m = folium.Map(location=[39.949610, -75.150282], zoom_start=16)
+folium.Marker([39.949610, -75.150282], popup="Liberty Bell", tooltip="Liberty Bell").add_to(m)
+st_data = st_folium(m, width=725)
+Pandas profiling component for Streamlit. Created by
+df = pd.read_csv("https://storage.googleapis.com/tf-datasets/titanic/train.csv")
+Get the coordinates of clicks on an image. Created by
+from streamlit_image_coordinates import streamlit_image_coordinates
+value = streamlit_image_coordinates("https://placekitten.com/200/300")
+Make Plotly charts interactive!. Created by
+from streamlit_plotly_events import plotly_events
+selected_points = plotly_events(fig)
+A library with useful Streamlit extras. Created by
+from streamlit_extras.metric_cards import style_metric_cards
+col3.metric(label="No Change", value=5000, delta=0)
+st.scatter_chart(my_data_frame)
+Display a map with points on it.
+Display a matplotlib.pyplot figure.
+Display a chart using the Altair library.
+st.altair_chart(my_altair_chart)
+Display a chart using the Vega-Lite library.
+st.vega_lite_chart(my_vega_lite_chart)
+Display an interactive Plotly chart.
+st.plotly_chart(my_plotly_chart)
+Display an interactive Bokeh chart.
+st.bokeh_chart(my_bokeh_chart)
+Display a chart using the PyDeck library.
+st.pydeck_chart(my_pydeck_chart)
+Display a graph using the dagre-d3 library.
+st.graphviz_chart(my_graphviz_spec)
+These are featured components created by our lovely community. For more examples and inspiration, check out our
+animations inside your Streamlit app. Created by
+lottie_hello = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_V9t630.json")
+st_lottie(lottie_hello, key="hello")
+Make Plotly charts interactive!. Created by
+selected_points = plotly_events(fig)
+A library with useful Streamlit extras. Created by
+chart += get_annotations_chart(annotations=[("Mar 01, 2008", "Pretty good day for GOOG"), ("Dec 01, 2007", "Something's going wrong for GOOG & AAPL"), ("Nov 01, 2008", "Market starts again thanks to..."), ("Dec 01, 2009", "Small crash for GOOG after..."),],)
+st.altair_chart(chart, use_container_width=True)
+A deceptively simple plotting library for Streamlit. Created by
+plost.line_chart(my_dataframe, x='time', y='stock_value', color='stock_name',)
+High dimensional Interactive Plotting. Created by
+data = [{'dropout':0.1, 'lr': 0.001, 'loss': 10.0, 'optimizer': 'SGD'}, {'dropout':0.15, 'lr': 0.01, 'loss': 3.5, 'optimizer': 'Adam'}, {'dropout':0.3, 'lr': 0.1, 'loss': 4.5, 'optimizer': 'Adam'}]
+hip.Experiment.from_iterable(data).display()
+High dimensional Interactive Plotting. Created by
+from streamlit_echarts import st_echarts
+Streamlit Component for rendering Folium maps. Created by
+m = folium.Map(location=[39.949610, -75.150282], zoom_start=16)
+st_data = st_folium(m, width=725)
+spaCy building blocks and visualizers for Streamlit apps. Created by
+models = ["en_core_web_sm", "en_core_web_md"]
+spacy_streamlit.visualize(models, "Sundar Pichai is the CEO of Google.")
+A Streamlit Graph Vis, based on
+from streamlit_agraph import agraph, Node, Edge, Config
+agraph(nodes=nodes, edges=edges, config=config)
+animations inside your Streamlit app. Created by
+lottie_hello = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_V9t630.json")
+st_lottie(lottie_hello, key="hello")
+Make Plotly charts interactive!. Created by
+selected_points = plotly_events(fig)
+A library with useful Streamlit extras. Created by
+chart += get_annotations_chart(annotations=[("Mar 01, 2008", "Pretty good day for GOOG"), ("Dec 01, 2007", "Something's going wrong for GOOG & AAPL"), ("Nov 01, 2008", "Market starts again thanks to..."), ("Dec 01, 2009", "Small crash for GOOG after..."),],)
+st.altair_chart(chart, use_container_width=True)
+A deceptively simple plotting library for Streamlit. Created by
+plost.line_chart(my_dataframe, x='time', y='stock_value', color='stock_name',)
+High dimensional Interactive Plotting. Created by
+data = [{'dropout':0.1, 'lr': 0.001, 'loss': 10.0, 'optimizer': 'SGD'}, {'dropout':0.15, 'lr': 0.01, 'loss': 3.5, 'optimizer': 'Adam'}, {'dropout':0.3, 'lr': 0.1, 'loss': 4.5, 'optimizer': 'Adam'}]
+hip.Experiment.from_iterable(data).display()
+High dimensional Interactive Plotting. Created by
+from streamlit_echarts import st_echarts
+Streamlit Component for rendering Folium maps. Created by
+m = folium.Map(location=[39.949610, -75.150282], zoom_start=16)
+st_data = st_folium(m, width=725)
+spaCy building blocks and visualizers for Streamlit apps. Created by
+models = ["en_core_web_sm", "en_core_web_md"]
+spacy_streamlit.visualize(models, "Sundar Pichai is the CEO of Google.")
+A Streamlit Graph Vis, based on
+from streamlit_agraph import agraph, Node, Edge, Config
+agraph(nodes=nodes, edges=edges, config=config)
+animations inside your Streamlit app. Created by
+lottie_hello = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_V9t630.json")
+st_lottie(lottie_hello, key="hello")
+Make Plotly charts interactive!. Created by
+selected_points = plotly_events(fig)
+A library with useful Streamlit extras. Created by
+chart += get_annotations_chart(annotations=[("Mar 01, 2008", "Pretty good day for GOOG"), ("Dec 01, 2007", "Something's going wrong for GOOG & AAPL"), ("Nov 01, 2008", "Market starts again thanks to..."), ("Dec 01, 2009", "Small crash for GOOG after..."),],)
+st.altair_chart(chart, use_container_width=True)
+clicked = st.button("Click me")
+Display a download button widget.
+st.download_button("Download file", file)
+Display a form submit button. For use with
+st.form_submit_button("Sign up")
+st.link_button("Go to gallery", url)
+Display a link to another page in a multipage app.
+st.page_link("app.py", label="Home", icon="🏠")
+st.page_link("pages/profile.py", label="My profile")
+selected = st.checkbox("I agree")
+Display a color picker widget.
+color = st.color_picker("Pick a color")
+Display a rating or sentiment button group.
+Display a multiselect widget. The multiselect widget starts as empty.
+choices = st.multiselect("Buy", ["milk", "apples", "potatoes"])
+Display a pill-button selection widget.
+st.pills("Tags", ["Sports", "AI", "Politics"])
+Display a radio button widget.
+choice = st.radio("Pick one", ["cats", "dogs"])
+Display a segmented-button selection widget.
+st.segmented_control("Filter", ["Open", "Closed", "All"])
+choice = st.selectbox("Pick one", ["cats", "dogs"])
+Display a slider widget to select items from a list.
+size = st.select_slider("Pick a size", ["S", "M", "L"])
+activated = st.toggle("Activate")
+Display a numeric input widget.
+choice = st.number_input("Pick a number", 0, 10)
+number = st.slider("Pick a number", 0, 100)
+date = st.date_input("Your birthday")
+Display a datetime input widget.
+datetime = st.datetime_input("Schedule your event")
+time = st.time_input("Meeting time")
+prompt = st.chat_input("Say something")
+st.write(f"The user has sent: {prompt}")
+Display a multi-line text input widget.
+text = st.text_area("Text to translate")
+Display a single-line text input widget.
+name = st.text_input("First name")
+Display a widget that allows users to record with their microphone.
+speech = st.audio_input("Record a voice message")
+edited = st.data_editor(df, num_rows="dynamic")
+Display a file uploader widget.
+data = st.file_uploader("Upload a CSV")
+Display a widget that allows users to upload images directly from a camera.
+image = st.camera_input("Take a picture")
+These are featured components created by our lovely community. For more examples and inspiration, check out our
+Streamlit Component for a Chatbot UI. Created by
+from streamlit_chat import message
+message("Hello bot!", is_user=True)  # align's the message to the right
+Select a single item from a list of options in a menu. Created by
+from streamlit_option_menu import option_menu
+option_menu("Main Menu", ["Home", 'Settings'],
+icons=['house', 'gear'], menu_icon="cast", default_index=1)
+A library with useful Streamlit extras. Created by
+from streamlit_extras.stoggle import stoggle
+"Click me!", """🥷 Surprise! Here's some additional content""",)
+Create a draggable and resizable dashboard in Streamlit. Created by
+from streamlit_elements import elements, mui, html
+Add tags to your Streamlit apps. Created by
+from streamlit_tags import st_tags
+st_tags(label='# Enter Keywords:', text='Press enter to add more', value=['Zero', 'One', 'Two'],
+suggestions=['five', 'six', 'seven', 'eight', 'nine', 'three', 'eleven', 'ten', 'four'], maxtags = 4, key='1')
+The simplest way to handle a progress bar in streamlit app. Created by
+Display a Timeline in Streamlit apps using
+from streamlit_timeline import timeline
+with open('example.json', "r") as f:
+timeline(f.read(), height=800)
+Alternative for st.camera_input which returns the webcam images live. Created by
+from camera_input_live import camera_input_live
+Ace editor component for Streamlit. Created by
+from streamlit_ace import st_ace
+Streamlit Component for a Chatbot UI. Created by
+from streamlit_chat import message
+message("Hello bot!", is_user=True)  # align's the message to the right
+Select a single item from a list of options in a menu. Created by
+from streamlit_option_menu import option_menu
+option_menu("Main Menu", ["Home", 'Settings'],
+icons=['house', 'gear'], menu_icon="cast", default_index=1)
+A library with useful Streamlit extras. Created by
+from streamlit_extras.stoggle import stoggle
+"Click me!", """🥷 Surprise! Here's some additional content""",)
+Create a draggable and resizable dashboard in Streamlit. Created by
+from streamlit_elements import elements, mui, html
+Add tags to your Streamlit apps. Created by
+from streamlit_tags import st_tags
+st_tags(label='# Enter Keywords:', text='Press enter to add more', value=['Zero', 'One', 'Two'],
+suggestions=['five', 'six', 'seven', 'eight', 'nine', 'three', 'eleven', 'ten', 'four'], maxtags = 4, key='1')
+The simplest way to handle a progress bar in streamlit app. Created by
+Display a Timeline in Streamlit apps using
+from streamlit_timeline import timeline
+with open('example.json', "r") as f:
+timeline(f.read(), height=800)
+Alternative for st.camera_input which returns the webcam images live. Created by
+from camera_input_live import camera_input_live
+Ace editor component for Streamlit. Created by
+from streamlit_ace import st_ace
+Streamlit Component for a Chatbot UI. Created by
+from streamlit_chat import message
+message("Hello bot!", is_user=True)  # align's the message to the right
+Select a single item from a list of options in a menu. Created by
+from streamlit_option_menu import option_menu
+option_menu("Main Menu", ["Home", 'Settings'],
+icons=['house', 'gear'], menu_icon="cast", default_index=1)
+A library with useful Streamlit extras. Created by
+from streamlit_extras.stoggle import stoggle
+"Click me!", """🥷 Surprise! Here's some additional content""",)
+Display an image or list of images.
+st.image("https://example.com/myimage.jpg")
+Display a logo in the upper-left corner of your app and its sidebar.
+st.audio("https://example.com/myaudio.mp3", format="audio/mp3")
+st.video("https://example.com/myvideo.mp4", format="video/mp4")
+These are featured components created by our lovely community. For more examples and inspiration, check out our
+A simple image cropper for Streamlit. Created by
+from streamlit_cropper import st_cropper
+st_cropper(img, realtime_update=realtime_update, box_color=box_color, aspect_ratio=aspect_ratio)
+Get the coordinates of clicks on an image. Created by
+from streamlit_image_coordinates import streamlit_image_coordinates
+streamlit_image_coordinates("https://placekitten.com/200/300")
+animations inside your Streamlit app. Created by
+lottie_hello = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_V9t630.json")
+st_lottie(lottie_hello, key="hello")
+Handling and transmitting real-time video/audio streams with Streamlit. Created by
+from streamlit_webrtc import webrtc_streamer
+Provides a sketching canvas using
+from streamlit_drawable_canvas import st_canvas
+st_canvas(fill_color="rgba(255, 165, 0, 0.3)", stroke_width=stroke_width, stroke_color=stroke_color, background_color=bg_color, background_image=Image.open(bg_image) if bg_image else None, update_streamlit=realtime_update, height=150, drawing_mode=drawing_mode, point_display_radius=point_display_radius if drawing_mode == 'point' else 0, key="canvas",)
+Compare images with a slider using
+from streamlit_image_comparison import image_comparison
+image_comparison(img1="image1.jpg", img2="image2.jpg",)
+A simple image cropper for Streamlit. Created by
+from streamlit_cropper import st_cropper
+st_cropper(img, realtime_update=realtime_update, box_color=box_color, aspect_ratio=aspect_ratio)
+Get the coordinates of clicks on an image. Created by
+from streamlit_image_coordinates import streamlit_image_coordinates
+streamlit_image_coordinates("https://placekitten.com/200/300")
+animations inside your Streamlit app. Created by
+lottie_hello = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_V9t630.json")
+st_lottie(lottie_hello, key="hello")
+Handling and transmitting real-time video/audio streams with Streamlit. Created by
+from streamlit_webrtc import webrtc_streamer
+Provides a sketching canvas using
+from streamlit_drawable_canvas import st_canvas
+st_canvas(fill_color="rgba(255, 165, 0, 0.3)", stroke_width=stroke_width, stroke_color=stroke_color, background_color=bg_color, background_image=Image.open(bg_image) if bg_image else None, update_streamlit=realtime_update, height=150, drawing_mode=drawing_mode, point_display_radius=point_display_radius if drawing_mode == 'point' else 0, key="canvas",)
+Compare images with a slider using
+from streamlit_image_comparison import image_comparison
+image_comparison(img1="image1.jpg", img2="image2.jpg",)
+A simple image cropper for Streamlit. Created by
+from streamlit_cropper import st_cropper
+st_cropper(img, realtime_update=realtime_update, box_color=box_color, aspect_ratio=aspect_ratio)
+Get the coordinates of clicks on an image. Created by
+from streamlit_image_coordinates import streamlit_image_coordinates
+streamlit_image_coordinates("https://placekitten.com/200/300")
+animations inside your Streamlit app. Created by
+lottie_hello = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_V9t630.json")
+st_lottie(lottie_hello, key="hello")
+Insert containers laid out as side-by-side columns.
+col1.write("this is column 1")
+col2.write("this is column 2")
+Insert a multi-element container.
+st.write("This will show last")
+c.write("This will show first")
+c.write("This will show second")
+Insert a modal dialog that can rerun independently from the rest of the script.
+email = st.text_input("Email")
+Insert a single-element container.
+st.write("This will show last")
+c.write("This will be replaced")
+c.write("This will show first")
+Insert a multi-element container that can be expanded/collapsed.
+with st.expander("Open to see more"):
+st.write("This is more content")
+Insert a multi-element popover container that can be opened/closed.
+st.sidebar.write("This lives in the sidebar")
+st.sidebar.button("Click me!")
+Add vertical or horizontal space.
+Insert containers separated into tabs.
+tab1, tab2 = st.tabs(["Tab 1", "Tab2"])
+These are featured components created by our lovely community. For more examples and inspiration, check out our
+Create a draggable and resizable dashboard in Streamlit. Created by
+from streamlit_elements import elements, mui, html
+Auto-generate Streamlit UI from Pydantic Models and Dataclasses. Created by
+import streamlit_pydantic as sp
+sp.pydantic_form(key="my_form",
+An experimental version of Streamlit Multi-Page Apps. Created by
+from st_pages import Page, show_pages, add_page_title
+show_pages([ Page("streamlit_app.py", "Home", "🏠"),
+Page("other_pages/page2.py", "Page 2", ":books:"), ])
+Streamlit provides a few commands to help you build conversational apps. These chat elements are designed to be used in conjunction with each other, but you can also use them separately.
+lets you insert a chat message container into the app so you can display messages from the user or the app. Chat containers can contain other Streamlit elements, including charts, tables, text, and more.
+lets you display a chat input widget so the user can type in a message.
+prompt = st.chat_input("Say something")
+st.write(f"The user has sent: {prompt}")
+Insert a chat message container.
+st.line_chart(np.random.randn(30, 3))
+Display output of long-running tasks in a container.
+Write generators or streams to the app with a typewriter effect.
+st.write_stream(my_llm_stream)
+Temporarily displays a message while executing a block of code.
+with st.spinner("Please wait..."):
+Display output of long-running tasks in a container.
+Briefly displays a toast message in the bottom-right corner.
+Display celebratory snowflakes!
+Display an informational message.
+st.info("Dataset is updated every day at midnight.")
+st.warning("Unable to fetch image. Skipping...")
+st.error("We encountered an error")
+e = RuntimeError("This is an exception of type RuntimeError")
+These are featured components created by our lovely community. For more examples and inspiration, check out our
+The simplest way to handle a progress bar in streamlit app. Created by
+A custom notification box with the ability to close it out. Created by
+from streamlit_custom_notification_box import custom_notification_box
+styles = {'material-icons':{'color': 'red'}, 'text-icon-link-close-container': {'box-shadow': '#3896de 0px 4px'}, 'notification-text': {'':''}, 'close-button':{'':''}, 'link':{'':''}}
+custom_notification_box(icon='info', textDisplay='We are almost done with your registration...', externalLink='more info', url='#', styles=styles, key="foo")
+A library with useful Streamlit extras. Created by
+from streamlit_extras.let_it_rain import rain
+falling_speed=5, animation_length="infinite",)
+starts an authentication flow with an identity provider.
+removes a user's identity information.
+returns information about a logged-in user.
+st.write(f"Welcome back, {st.user.name}!")
+Configure the available pages in a multipage app.
+"Your account" : [log_out, settings],
+"Reports" : [overview, usage],
+Define a page in a multipage app.
+Display a link to another page in a multipage app.
+st.page_link("app.py", label="Home", icon="🏠")
+st.page_link("pages/profile.py", label="My profile")
+Programmatically navigates to a specified page.
+st.switch_page("pages/my_page.py")
+Insert a modal dialog that can rerun independently from the rest of the script.
+email = st.text_input("Email")
+Create a form that batches elements together with a “Submit" button.
+email = st.text_input("Email")
+st.form_submit_button("Sign up")
+Define a fragment to rerun independently from the rest of the script.
+These are featured components created by our lovely community. For more examples and inspiration, check out our
+Force a refresh without tying up a script. Created by
+from streamlit_autorefresh import st_autorefresh
+st_autorefresh(interval=2000, limit=100,
+Auto-generate Streamlit UI from Pydantic Models and Dataclasses. Created by
+import streamlit_pydantic as sp
+sp.pydantic_form(key="my_form",
+An experimental version of Streamlit Multi-Page Apps. Created by
+from st_pages import Page, show_pages, add_page_title
+show_pages([ Page("streamlit_app.py", "Home", "🏠"),
+Page("other_pages/page2.py", "Page 2", ":books:"), ])
+Function decorator to cache functions that return data (e.g. dataframe transforms, database queries, ML inference).
+def long_function(param1, param2):
+# Perform expensive computation here or
+# fetch data from the web here
+Function decorator to cache functions that return global resources (e.g. database connections, ML models).
+# Return a global resource here
+model="distilbert-base-uncased-finetuned-sst-2-english"
+Session state is a way to share variables between reruns, for each user session.
+st.session_state['key'] = value
+Get, set, or clear the query parameters that are shown in the browser's URL bar.
+provides a read-only interface to access cookies, headers, locale, and other browser-session information.
+Connect to a data source or API
+conn = st.connection('pets_db', type='sql')
+pet_owners = conn.query('select * from pet_owners')
+conn = st.connection('snowflake')
+A connection to a SQL database using SQLAlchemy.
+Build your own connection with
+class MyConnection(BaseConnection[myconn.MyConnection]):
+def _connect(self, **kwargs) -> MyConnection:
+return myconn.connect(**self._secrets, **kwargs)
+return self._instance.query(query)
+Access secrets from a local TOML file.
+key = st.secrets["OpenAI_key"]
+Save your secrets in a per-project or per-profile TOML file.
+OpenAI_key = "<YOUR_SECRET_KEY>"
+These are featured components created by our lovely community. For more examples and inspiration, check out our
+A secure authentication module to validate user credentials. Created by
+import streamlit_authenticator as stauth
+authenticator = stauth.Authenticate( config['credentials'], config['cookie']['name'],
+config['cookie']['key'], config['cookie']['expiry_days'], config['preauthorized'])
+A simple synchronous way of accessing localStorage from your app. Created by
+from streamlit_ws_localstorage import injectWebsocketCode
+ret = conn.setLocalStorageVal(key='k1', val='v1')
+The fastest way to provide comprehensive login inside Streamlit. Created by
+from auth0_component import login_button
+user_info = login_button(clientId, domain = domain)
+my_component = st.components.v2.component(
+my_component = st.components.v2.component(
+Support code published through npm.
+npm i @streamlit/component-v2-lib
+Type alias for the component function.
+import { FrontendRenderer } from "@streamlit/component-v2-lib";
+Type alias for the component arguments.
+import { FrontendRendererArgs } from "@streamlit/component-v2-lib";
+Type alias for the component state.
+import { FrontendState } from "@streamlit/component-v2-lib";
+Type alias for the component cleanup function.
+import { CleanupFunction } from "@streamlit/component-v2-lib";
+Create and register a custom component.
+from st.components.v1 import declare_component
+Display an HTML string in an iframe.
+from st.components.v1 import html
+Load a remote URL in an iframe.
+from st.components.v1 import iframe
+Configures the default settings for your app.
+Retrieve a single configuration option.
+st.get_option("theme.primaryColor")
+Set a single configuration option. (This is very limited.)
+st.set_option("deprecation.showPyplotGlobalUse", False)
+Set page title, favicon, and more
+Configures the default settings of the page.
+simulates a running Streamlit app for testing.
+from streamlit.testing.v1 import AppTest
+at = AppTest.from_file("streamlit_app.py")
+at.text_input("word").input("Bazbat").run()
+assert at.warning[0].value == "Try again."
+st.testing.v1.AppTest.from_file
+initializes a simulated app from a file.
+from streamlit.testing.v1 import AppTest
+at = AppTest.from_file("streamlit_app.py")
+st.testing.v1.AppTest.from_string
+initializes a simulated app from a string.
+from streamlit.testing.v1 import AppTest
+at = AppTest.from_string(app_script_as_string)
+st.testing.v1.AppTest.from_function
+initializes a simulated app from a function.
+from streamlit.testing.v1 import AppTest
+at = AppTest.from_function(app_script_as_callable)
+A representation of container elements, including:
+at.sidebar.button[0].click().run()
+The base class for representation of all elements, including:
+# at.title returns a sequence of Title
+assert at.title[0].value == "My awesome app"
+at.chat_input[0].set_value("What is Streamlit?").run()
+at.color_picker[0].pick("#FF4B4B").run()
+release_date = datetime.date(2023, 10, 26)
+at.date_input[0].set_value(release_date).run()
+at.multiselect[0].select("New York").run()
+at.number_input[0].increment().run()
+at.radio[0].set_value("New York").run()
+at.select_slider[0].set_range("A","C").run()
+at.selectbox[0].select("New York").run()
+at.slider[0].set_range(2,5).run()
+at.text_area[0].input("Streamlit is awesome!").run()
+at.text_input[0].input("Streamlit").run()
+at.time_input[0].increment().run()
+at.toggle[0].set_value("True").run()
+These are featured components created by our lovely community. For more examples and inspiration, check out our
+Pandas profiling component for Streamlit. Created by
+df = pd.read_csv("https://storage.googleapis.com/tf-datasets/titanic/train.csv")
+Ace editor component for Streamlit. Created by
+from streamlit_ace import st_ace
+Track & visualize user interactions with your streamlit app. Created by
+with streamlit_analytics.track():
+st.text_input("Write something")
+are full of helpful information and Streamlit experts.
