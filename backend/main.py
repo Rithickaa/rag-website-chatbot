@@ -2,10 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+# ✅ Logging
+from logger import log_query
+
 # Legacy docs (current source)
 from docs_source import docs_content as legacy_docs_content
 
-# Markdown docs (future source)
+# Markdown docs (current source)
 from markdown_docs_provider import get_markdown_docs
 
 from tfidf_retriever import TfidfRetriever
@@ -22,7 +25,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 🔒 Feature flag (DO NOT flip yet)
+# 🔒 Feature flag
 USE_MARKDOWN_DOCS = True
 
 
@@ -56,6 +59,15 @@ def query_docs(request: QueryRequest):
         question=request.question,
         contexts=contexts
     )
+
+    # 🔹 Day 5: Query logging (only if something was retrieved)
+    if retrieved:
+        top_result = retrieved[0]
+        log_query(
+            query=request.question,
+            top_section=top_result["section"],
+            score=top_result["score"]
+        )
 
     return {
         "question": request.question,
