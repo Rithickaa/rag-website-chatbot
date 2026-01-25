@@ -8,8 +8,8 @@ embeddings/faiss_store.py
 embeddings/search_faiss.py
 embeddings/llm_response.py
 
-# Ignore frontend experiments
-frontend/
-
 # Ignore local data scripts
 data/scrape_streamlit.py
+
+# Ignore runtime logs
+backend/logs/*.log
