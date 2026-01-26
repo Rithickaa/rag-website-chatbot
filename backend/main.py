@@ -2,17 +2,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-# ✅ Logging
-from logger import log_query
+from backend.logger import log_query
+from backend.docs_source import DOCS
+from backend.tfidf_retriever import TfidfRetriever
+from backend.llm_generator import LLMGenerator
 
-# Legacy docs (current source)
-from docs_source import docs_content as legacy_docs_content
-
-# Markdown docs (current source)
-from markdown_docs_provider import get_markdown_docs
-
-from tfidf_retriever import TfidfRetriever
-from llm_generator import LLMGenerator
 
 app = FastAPI(title="DOCARG Backend")
 
@@ -25,24 +19,31 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 🔒 Feature flag
-USE_MARKDOWN_DOCS = True
-
-
-def load_docs():
-    if USE_MARKDOWN_DOCS:
-        return get_markdown_docs()
-    return legacy_docs_content
-
-
-# Initialize components
-docs = load_docs()
-retriever = TfidfRetriever(docs)
-generator = LLMGenerator()
+# These will be initialized on startup
+retriever: TfidfRetriever | None = None
+generator: LLMGenerator | None = None
 
 
 class QueryRequest(BaseModel):
     question: str
+
+
+@app.on_event("startup")
+def startup_event():
+    """
+    Initialize retriever and generator exactly once on startup.
+    DOCS is a list of answer-complete documentation chunks.
+    """
+    global retriever, generator
+
+    print("✅ DOCARG documentation loaded")
+    print(f"📄 Total documentation chunks: {len(DOCS)}")
+
+    retriever = TfidfRetriever(DOCS)
+    generator = LLMGenerator()
+
+    print("✅ TF-IDF retriever initialized")
+    print("✅ LLM generator initialized")
 
 
 @app.get("/")
@@ -52,31 +53,39 @@ def read_root():
 
 @app.post("/query")
 def query_docs(request: QueryRequest):
-    retrieved = retriever.retrieve(request.question, top_k=2)
+    retrieved = retriever.retrieve(request.question, top_k=3)
+
+    # 🔒 Safe failure: nothing relevant found
+    if not retrieved:
+        return {
+            "question": request.question,
+            "answer": "I don’t know based on the given documentation.",
+            "sources": [],
+        }
+
     contexts = [item["content"] for item in retrieved]
 
     answer = generator.generate_answer(
         question=request.question,
-        contexts=contexts
+        contexts=contexts,
     )
 
-    # 🔹 Day 5: Query logging (only if something was retrieved)
-    if retrieved:
-        top_result = retrieved[0]
-        log_query(
-            query=request.question,
-            top_section=top_result["section"],
-            score=top_result["score"]
-        )
+    # 🔹 Log only the top retrieval result
+    top_result = retrieved[0]
+    log_query(
+        query=request.question,
+        top_section=top_result["section"],
+        score=top_result["score"],
+    )
 
+    # 🔹 Return only the primary source for clean UX
     return {
         "question": request.question,
         "answer": answer,
         "sources": [
             {
-                "section": item["section"],
-                "score": item["score"]
+                "section": top_result["section"],
+                "score": top_result["score"],
             }
-            for item in retrieved
         ],
     }

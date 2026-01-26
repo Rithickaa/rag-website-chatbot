@@ -11,26 +11,40 @@ class LLMGenerator:
         self.client = Groq(api_key=api_key)
 
     def generate_answer(self, question: str, contexts: list[str]) -> str:
-        context_text = "\n\n".join(contexts)
+        """
+        Generates an answer strictly from retrieved documentation.
+        Allows summarization across multiple documentation statements.
+        """
+
+        # HARD GUARD
+        if not contexts:
+            return "I don’t know based on the given documentation."
+
+        context_text = "\n".join(contexts)
 
         messages = [
             {
                 "role": "system",
                 "content": (
-                    "You are a documentation assistant. "
+                    "You are a documentation-grounded assistant. "
                     "Answer ONLY using the provided documentation. "
-                    "If the answer is not present, say "
-                    "'I don't know based on the given documentation.'"
+                    "You may summarize or combine multiple documentation statements. "
+                    "Do NOT add new facts. "
+                    "If the documentation does not contain enough information, say "
+                    "'I don’t know based on the given documentation.'"
                 ),
             },
             {
                 "role": "user",
-                "content": f"Documentation:\n{context_text}\n\nQuestion:\n{question}",
+                "content": (
+                    f"Documentation:\n{context_text}\n\n"
+                    f"Question:\n{question}"
+                ),
             },
         ]
 
         response = self.client.chat.completions.create(
-            model="llama-3.1-8b-instant",   # ✅ UPDATED, SUPPORTED MODEL
+            model="llama-3.1-8b-instant",
             messages=messages,
             temperature=0.2,
         )

@@ -1,91 +1,131 @@
-docs_content = {
-    "Introduction": """
-DOCARG (Documentation-Oriented Contextual Augmented Retrieval Generation) is a
-documentation-centric question answering system.
-
-DOCARG avoids hallucinations by ensuring that all answers are generated strictly
-from retrieved documentation content. The system does not rely on the language
-model’s internal knowledge.
-
-The primary goal of DOCARG is to provide accurate, explainable, and traceable
-answers grounded in documentation.
-""",
-
-    "Core Philosophy": """
-The core philosophy of DOCARG is that documentation is the single source of truth.
-
-DOCARG enforces explainability by always linking answers to specific documentation
-sections. Users can verify exactly where an answer originated.
-
-By design, DOCARG prefers to return "I don't know" rather than generate an
-unsupported or fabricated response.
-""",
-
-    "Retrieval Mechanism": """
-DOCARG uses a TF-IDF based retrieval mechanism to locate relevant documentation.
-
-Each documentation section is split into paragraph-level chunks. These chunks are
-vectorized using TF-IDF, and cosine similarity is used to rank relevance.
-
-Only the most relevant chunks are passed to the generation stage.
-""",
-
-    "Why TF-IDF": """
-TF-IDF was chosen over dense embeddings because it is lightweight, deterministic,
-and fully explainable.
-
-Unlike dense embeddings, TF-IDF does not require GPUs, large models, or external
-dependencies. This makes the system stable and platform-independent.
-
-TF-IDF also provides transparent similarity scores, which improves debugging and
-trust in retrieval results.
-""",
-
-    "Design Decisions": """
-DOCARG avoids hallucinations by restricting the language model to retrieved
-documentation only.
-
-The language model is never allowed to answer beyond the provided context. If the
-retrieved documentation does not explicitly contain an answer, DOCARG responds
-with "I don't know based on the given documentation."
-
-This design choice prioritizes correctness and safety over speculative answers.
-""",
-
-    "Architecture": """
-DOCARG follows a modular architecture separating retrieval and generation.
-
-The frontend presents documentation and a chatbot interface. The backend handles
-retrieval, scoring, and controlled answer generation.
-
-This separation improves maintainability and allows retrieval strategies to be
-improved independently.
-""",
-
-    "Limitations": """
-DOCARG cannot answer questions that fall outside the documented scope.
-
-TF-IDF relies on lexical similarity and may struggle with heavily paraphrased
-queries. However, this limitation is accepted in exchange for transparency and
-predictable behavior.
-
-Documentation updates require rebuilding the TF-IDF index.
-""",
-
-    "API Reference": """
-DOCARG exposes a REST API for querying documentation.
-
-Endpoint:
-POST /query
-
-The request contains a natural language question. The response includes the
-generated answer and the documentation sections used to produce it.
-""",
-
-    "Error Handling": """
-DOCARG returns a 422 error for invalid request payloads.
-
-Internal server errors indicate failures during retrieval or generation and should
-be inspected via logs.
 """
-}
+Authoritative documentation source for DOCARG.
+
+This file defines the exact knowledge base used for retrieval.
+The assistant must answer strictly from this content.
+"""
+
+DOCS = [
+
+    # =========================
+    # Introduction
+    # =========================
+    "DOCARG is a documentation-first question answering system designed for reliability, traceability, and correctness.",
+
+    "DOCARG ensures that every response is grounded strictly in documented knowledge.",
+
+    "DOCARG is suitable for technical documentation, internal knowledge bases, and developer platforms.",
+
+    "DOCARG treats documentation as the single source of truth.",
+
+    "DOCARG never allows the language model to invent answers.",
+
+
+    # =========================
+    # Core Concepts
+    # =========================
+    "The core concepts of DOCARG define how the system behaves.",
+
+    "DOCARG follows a retrieval-first paradigm where documentation is retrieved before generating an answer.",
+
+    "In DOCARG, documentation is authoritative.",
+
+    "In DOCARG, language models act only as rephrasing engines.",
+
+    "DOCARG enforces explicit safe failure when documentation is missing.",
+
+    "This approach reduces hallucinations compared to traditional chat-based systems.",
+
+
+    # =========================
+    # Retrieval Mechanism
+    # =========================
+    "The retrieval mechanism of DOCARG defines how documentation is searched and selected.",
+
+    "DOCARG splits documentation into paragraph-level segments.",
+
+    "DOCARG applies text normalization and cleaning.",
+
+    "DOCARG uses TF-IDF vectorization for retrieval.",
+
+    "Cosine similarity is used to rank documentation segments.",
+
+    "Only the most relevant documentation segments are passed to the generation layer.",
+
+
+    # =========================
+    # Why TF-IDF
+    # =========================
+    "DOCARG uses TF-IDF to prioritize transparency and explainability.",
+
+    "TF-IDF provides deterministic retrieval behavior.",
+
+    "TF-IDF allows inspection of term relevance.",
+
+    "DOCARG intentionally avoids opaque embedding-based retrieval methods.",
+
+
+    # =========================
+    # Architecture
+    # =========================
+    "The architecture of DOCARG is a layered system.",
+
+    "DOCARG consists of a frontend, a retrieval layer, a documentation source, and a generation layer.",
+
+    "The frontend handles navigation and user interface rendering.",
+
+    "The retrieval layer selects relevant documentation.",
+
+    "The documentation layer acts as the single source of truth.",
+
+    "The generation layer rephrases retrieved documentation into answers.",
+
+
+    # =========================
+    # Design Decisions
+    # =========================
+    "The design decisions of DOCARG prioritize correctness and explainability.",
+
+    "DOCARG prioritizes correctness over creativity.",
+
+    "DOCARG avoids speculative responses.",
+
+    "DOCARG does not rely on hidden or external data sources.",
+
+    "DOCARG enforces strict fallback behavior when information is missing.",
+
+
+    # =========================
+    # Limitations
+    # =========================
+    "DOCARG has the following limitations: it can only answer questions that are explicitly covered in its documentation, it does not use external or internet-based knowledge, it does not reason beyond the provided content, and it does not infer unstated facts. These limitations are intentional design decisions to prevent hallucinations."
+
+
+
+    # =========================
+    # API Reference
+    # =========================
+    "The API reference of DOCARG describes how external clients interact with the system.",
+
+    "DOCARG exposes a single POST endpoint at /query.",
+
+    "The /query endpoint accepts a natural language question.",
+
+    "The /query endpoint returns a grounded answer derived strictly from documentation.",
+
+    "The API response may include source metadata.",
+
+
+    # =========================
+    # Error Handling
+    # =========================
+    "Error handling in DOCARG defines how the system responds to failures.",
+
+    "DOCARG is designed to fail safely and transparently.",
+
+    "If no relevant documentation is retrieved, DOCARG does not generate an answer.",
+
+    "If documentation is missing, DOCARG explicitly refuses to answer.",
+
+    "Errors are logged for traceability and debugging.",
+]

@@ -1,9 +1,9 @@
 import re
 import numpy as np
-from typing import Dict, Union, List
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk.stem import PorterStemmer
+
 
 stemmer = PorterStemmer()
 
@@ -18,64 +18,65 @@ def stem_tokenizer(text: str):
 
 
 class TfidfRetriever:
-    def __init__(self, docs: Union[Dict[str, str], List[str]]):
+    def __init__(self, docs: list[str]):
         """
-        docs can be:
-        1) dict -> { section_name: full_text }   (legacy docs)
-        2) list -> [ full_text, full_text, ... ] (markdown docs)
+        docs: list of answer-complete documentation chunks
         """
 
-        self.chunks = []
-        self.metadata = []
+        self.chunks: list[str] = []
+        self.metadata: list[dict] = []
 
-        # 🔹 Case 1: Legacy dict-based docs
-        if isinstance(docs, dict):
-            for section, content in docs.items():
-                paragraphs = [
-                    p.strip()
-                    for p in content.split("\n")
-                    if len(p.strip()) > 60
-                ]
+        for idx, text in enumerate(docs):
+            cleaned = text.strip()
+            if not cleaned:
+                continue
 
-                for para in paragraphs:
-                    self.chunks.append(para)
-                    self.metadata.append({
-                        "section": section
-                    })
+            self.chunks.append(cleaned)
 
-        # 🔹 Case 2: Markdown list-based docs
-        elif isinstance(docs, list):
-            for idx, content in enumerate(docs):
-                paragraphs = [
-                    p.strip()
-                    for p in content.split("\n")
-                    if len(p.strip()) > 60
-                ]
+            # Temporary section label (will improve later)
+            self.metadata.append({
+                "section": self._infer_section(cleaned)
+            })
 
-                section_name = f"Section {idx + 1}"
-
-                for para in paragraphs:
-                    self.chunks.append(para)
-                    self.metadata.append({
-                        "section": section_name
-                    })
-
-        else:
-            raise TypeError("Unsupported docs format passed to TfidfRetriever")
-
-        # 🔹 Improved TF-IDF configuration
         self.vectorizer = TfidfVectorizer(
             tokenizer=stem_tokenizer,
             stop_words="english",
-            ngram_range=(1, 2),     # unigrams + bigrams
-            sublinear_tf=True      # log-scaled term frequency
+            ngram_range=(1, 2),
+            sublinear_tf=True,
         )
 
         self.tfidf_matrix = self.vectorizer.fit_transform(self.chunks)
 
-    def retrieve(self, query: str, top_k: int = 6):
+    def _infer_section(self, text: str) -> str:
         """
-        Returns top_k most relevant chunks with metadata.
+        Infer section name based on keywords.
+        This maps answers back to sidebar sections.
+        """
+
+        lowered = text.lower()
+
+        if "retrieval" in lowered:
+            return "Retrieval Mechanism"
+        if "tf-idf" in lowered:
+            return "Why TF-IDF"
+        if "architecture" in lowered:
+            return "Architecture"
+        if "design decision" in lowered or "prioritizes" in lowered:
+            return "Design Decisions"
+        if "limitation" in lowered or "cannot" in lowered:
+            return "Limitations"
+        if "/query" in lowered or "endpoint" in lowered:
+            return "API Reference"
+        if "error" in lowered or "fail" in lowered:
+            return "Error Handling"
+        if "core concept" in lowered or "retrieval-first" in lowered:
+            return "Core Concepts"
+
+        return "Introduction"
+
+    def retrieve(self, query: str, top_k: int = 3):
+        """
+        Retrieve top_k relevant documentation chunks.
         """
 
         query_vec = self.vectorizer.transform([query])
@@ -86,13 +87,13 @@ class TfidfRetriever:
         results = []
         for idx in top_indices:
             score = float(similarities[idx])
-            if score == 0:
+            if score <= 0:
                 continue
 
             results.append({
                 "content": self.chunks[idx],
                 "section": self.metadata[idx]["section"],
-                "score": score
+                "score": score,
             })
 
         return results
