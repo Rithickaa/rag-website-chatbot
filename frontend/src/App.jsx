@@ -7,6 +7,7 @@ import AskAIPanel from "./components/AskAIPanel";
 export default function App() {
   const [selectedSection, setSelectedSection] = useState("Introduction");
   const [aiOpen, setAiOpen] = useState(false);
+  const [sectionSource, setSectionSource] = useState("sidebar");
 
   return (
     <>
@@ -15,60 +16,100 @@ export default function App() {
       <div
         style={{
           display: "flex",
-          minHeight: "calc(100vh - 72px)",
+          minHeight: "calc(100vh - 88px)",
           backgroundColor: "#f9fafb",
         }}
       >
-        {/* Sidebar */}
         <Sidebar
           selectedSection={selectedSection}
-          setSelectedSection={setSelectedSection}
+          setSelectedSection={(section) => {
+            setSectionSource("sidebar");
+            setSelectedSection(section);
+          }}
+          sectionSource={sectionSource}
         />
 
-        {/* Main area */}
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            overflow: "hidden",
-          }}
-        >
-          {/* Documentation content */}
-          <div
-            style={{
-              flex: aiOpen ? "0 0 calc(100% - 360px)" : "1",
-              transition: "flex 0.3s ease",
-            }}
-          >
-            <Content selectedSection={selectedSection} />
-          </div>
-
-          {/* Ask AI Panel */}
-          <AskAIPanel open={aiOpen} onClose={() => setAiOpen(false)} />
+        <div style={{ flex: 1, overflow: "auto" }}>
+          <Content
+            selectedSection={selectedSection}
+            sectionSource={sectionSource}
+          />
         </div>
       </div>
 
-      {/* Ask AI Button */}
-      <button
-        onClick={() => setAiOpen(true)}
-        style={{
-          position: "fixed",
-          bottom: "24px",
-          right: "24px",
-          padding: "12px 20px",
-          borderRadius: "999px",
-          backgroundColor: "#111827",
-          color: "#ffffff",
-          fontSize: "14px",
-          fontWeight: "600",
-          border: "none",
-          cursor: "pointer",
-          boxShadow: "0 12px 30px rgba(0,0,0,0.25)",
-          zIndex: 1000,
+      <AskAIPanel
+        open={aiOpen}
+        onClose={() => setAiOpen(false)}
+        onSeeSection={(section) => {
+          setSectionSource("chat");
+          setSelectedSection(section);
         }}
-      >
-        🤖 Ask AI
-      </button>
+      />
+
+      {/* 🌊 Floating Ask AI Button */}
+      {!aiOpen && (
+        <button
+          onClick={() => setAiOpen(true)}
+          style={{
+            position: "fixed",
+            bottom: "28px",
+            right: "28px",
+
+            padding: "14px 22px",
+            borderRadius: "999px",
+
+            backgroundColor: "#294687",
+            color: "#ffffff",
+
+            fontSize: "15px",
+            fontWeight: 600,
+            letterSpacing: "0.02em",
+
+            border: "none",
+            cursor: "pointer",
+
+            boxShadow:
+              "0 12px 30px rgba(37,99,235,0.35)",
+
+            zIndex: 1000,
+
+            animation: "askAiPulse 2.5s ease-in-out infinite",
+            transition:
+              "transform 0.2s ease, box-shadow 0.2s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform =
+              "translateY(-3px)";
+            e.currentTarget.style.boxShadow =
+              "0 18px 40px rgba(37,99,235,0.45)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform =
+              "translateY(0)";
+            e.currentTarget.style.boxShadow =
+              "0 12px 30px rgba(37,99,235,0.35)";
+          }}
+        >
+          🤖 Ask AI
+        </button>
+      )}
+
+      {/* Button animation */}
+      <style>
+        {`
+          @keyframes askAiPulse {
+            0% {
+              box-shadow: 0 0 0 0 rgba(37,99,235,0.35);
+            }
+            70% {
+              box-shadow: 0 0 0 14px rgba(37,99,235,0);
+            }
+            100% {
+              box-shadow: 0 0 0 0 rgba(37,99,235,0);
+            }
+          }
+        `}
+      </style>
     </>
   );
 }

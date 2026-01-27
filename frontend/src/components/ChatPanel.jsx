@@ -1,6 +1,6 @@
 import { useDocargChat } from "../hooks/useDocargChat";
 
-export default function ChatPanel() {
+export default function ChatPanel({ onSeeSection }) {
   const {
     question,
     setQuestion,
@@ -15,6 +15,8 @@ export default function ChatPanel() {
     e.preventDefault();
     submitQuestion();
   };
+
+  const primarySource = sources && sources.length > 0 ? sources[0] : null;
 
   return (
     <div>
@@ -40,17 +42,25 @@ export default function ChatPanel() {
         <div style={{ fontSize: "14px" }}>
           <p>{answer}</p>
 
-          {sources.length > 0 && (
-            <div style={{ marginTop: "8px" }}>
-              <strong>Sources</strong>
-              <ul style={{ fontSize: "12px" }}>
-                {sources.map((src, idx) => (
-                  <li key={idx}>
-                    {src.section} ({src.score.toFixed(2)})
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* 🔥 See section action */}
+          {primarySource && (
+            <button
+              onClick={() => onSeeSection(primarySource.section)}
+              style={{
+                marginTop: "8px",
+                background: "none",
+                border: "none",
+                padding: 0,
+                color: "#2563eb",
+                fontSize: "13px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+              }}
+            >
+              📘 See section: <strong>{primarySource.section}</strong>
+            </button>
           )}
         </div>
       )}

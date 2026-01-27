@@ -1,36 +1,38 @@
+import { useEffect, useState } from "react";
+
 /* ---------- Styles ---------- */
 
 const listStyle = {
-  paddingLeft: "22px",
-  margin: "18px 0",
+  paddingLeft: "24px",
+  margin: "20px 0",
 };
 
 const noteBox = {
-  backgroundColor: "#f9fafb",
-  borderLeft: "4px solid #60a5fa",
-  padding: "16px 18px",
-  borderRadius: "8px",
-  margin: "24px 0",
-  fontSize: "14.5px",
+  backgroundColor: "#f8fafc",
+  borderLeft: "4px solid #3b82f6",
+  padding: "18px 20px",
+  borderRadius: "10px",
+  margin: "28px 0",
+  fontSize: "15px",
 };
 
 const warningBox = {
   backgroundColor: "#fff7ed",
-  borderLeft: "4px solid #fb923c",
-  padding: "16px 18px",
-  borderRadius: "8px",
-  margin: "24px 0",
-  fontSize: "14.5px",
+  borderLeft: "4px solid #f97316",
+  padding: "18px 20px",
+  borderRadius: "10px",
+  margin: "28px 0",
+  fontSize: "15px",
 };
 
 const codeBlock = {
-  backgroundColor: "#0f172a",
+  backgroundColor: "#020617",
   color: "#e5e7eb",
-  padding: "16px 18px",
-  borderRadius: "10px",
+  padding: "18px 20px",
+  borderRadius: "12px",
   fontFamily: "ui-monospace, monospace",
-  fontSize: "13.5px",
-  margin: "22px 0",
+  fontSize: "14px",
+  margin: "26px 0",
 };
 
 /* ---------- Documentation Content ---------- */
@@ -193,9 +195,7 @@ const docs = {
 
   "Error Handling": (
     <>
-      <p>
-        DOCARG is designed to fail safely and transparently.
-      </p>
+      <p>DOCARG is designed to fail safely and transparently.</p>
 
       <ul style={listStyle}>
         <li>No retrieval → no generation</li>
@@ -208,36 +208,72 @@ const docs = {
 
 /* ---------- Component ---------- */
 
-export default function Content({ selectedSection }) {
+export default function Content({ selectedSection, sectionSource }) {
+  const [highlight, setHighlight] = useState(false);
+
+  // ✨ Highlight ONLY when coming from chatbot
+  useEffect(() => {
+    if (sectionSource === "chat") {
+      setHighlight(true);
+      const timer = setTimeout(() => setHighlight(false), 1200);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedSection, sectionSource]);
+
   return (
     <main
       style={{
         width: "100%",
-        backgroundColor: "#ffffff",
-        lineHeight: "1.8",
-        color: "#111827",
+        minHeight: "100vh",
+        backgroundColor: "#f3f7fb",
         boxSizing: "border-box",
+        padding: "48px 0",
       }}
     >
-      {/* Centered readable container */}
       <div
         style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
-          padding: "64px 72px",
+          maxWidth: "860px",
+          marginLeft: "max(48px, 6vw)",
+          marginRight: "min(120px, 10vw)",
+          backgroundColor: "#ffffff",
+          borderRadius: "16px",
+          padding: "64px 56px",
+          boxShadow: "0 20px 40px rgba(15, 23, 42, 0.08)",
         }}
       >
         <h1
           style={{
-            fontSize: "32px",
-            fontWeight: "700",
-            marginBottom: "32px",
+            fontSize: "34px",
+            fontWeight: 700,
+            marginBottom: "14px",
+            color: "#020617",
+            padding: highlight ? "6px 10px" : "0",
+            backgroundColor: highlight ? "#d8e0f8" : "transparent",
+            borderRadius: "8px",
+            transition: "all 0.6s ease",
+            display: "inline-block",
           }}
         >
           {selectedSection}
         </h1>
 
-        <div style={{ fontSize: "15.8px", color: "#374151" }}>
+        <div
+          style={{
+            width: "72px",
+            height: "4px",
+            backgroundColor: "#aac8f7",
+            borderRadius: "999px",
+            marginBottom: "36px",
+          }}
+        />
+
+        <div
+          style={{
+            fontSize: "16px",
+            lineHeight: "1.9",
+            color: "#35475f",
+          }}
+        >
           {docs[selectedSection]}
         </div>
       </div>

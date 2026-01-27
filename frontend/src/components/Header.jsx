@@ -2,66 +2,104 @@ export default function Header() {
   return (
     <header
       style={{
-        height: "72px",
+        height: "88px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#ffffff",
-        borderBottom: "1px solid #e5e7eb",
+
+        // 🌊 Soft blue header background
+        backgroundColor: "#f5f8ff",
+
+        // Separation from content
+        borderBottom: "1px solid #e2e8f0",
+
+        // Brand anchor (keep)
+        borderTop: "3px solid #2563eb",
+
         position: "sticky",
         top: 0,
         zIndex: 100,
+
+        // Very subtle depth
+        boxShadow: "0 1px 0 rgba(15,23,42,0.06)",
       }}
     >
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "10px",
+          gap: "14px",
           cursor: "default",
-          animation: "fadeIn 0.8s ease-out",
+          animation: "headerFade 0.8s ease-out",
         }}
       >
-        {/* Robot Icon */}
+        {/* Icon */}
         <div
           style={{
-            width: "38px",
-            height: "38px",
-            borderRadius: "10px",
-            backgroundColor: "#f3f4f6",
+            width: "44px",
+            height: "44px",
+            borderRadius: "12px",
+
+            // Slightly stronger blue than background
+            backgroundColor: "#e0e7ff",
+
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "20px",
-            transition: "transform 0.3s ease",
+            fontSize: "22px",
+            transition: "all 0.25s ease",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.transform = "rotate(-8deg) scale(1.05)";
+            e.currentTarget.style.transform = "translateY(-1px)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.transform = "rotate(0deg) scale(1)";
+            e.currentTarget.style.transform = "translateY(0)";
           }}
         >
           🤖
         </div>
 
-        {/* Product Name */}
+        {/* Title */}
         <div
           style={{
-            fontSize: "20px",
-            fontWeight: "700",
-            letterSpacing: "0.02em",
-            color: "#111827",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            lineHeight: 1.1,
           }}
         >
-          DOCARG
+          <div
+            style={{
+              fontSize: "22px",
+              fontWeight: 700,
+              letterSpacing: "0.04em",
+
+              // 🔵 Primary blue title
+              color: "#1e3a8a",
+            }}
+          >
+            DOCARG
+          </div>
+
+          <div
+            style={{
+              fontSize: "12px",
+
+              // Muted slate-blue subtitle
+              color: "#475569",
+
+              marginTop: "4px",
+              letterSpacing: "0.02em",
+            }}
+          >
+            Documentation-Oriented Argumentation & Retrieval Generation
+          </div>
         </div>
       </div>
 
-      {/* Animation keyframes */}
       <style>
         {`
-          @keyframes fadeIn {
+          @keyframes headerFade {
             from {
               opacity: 0;
               transform: translateY(-6px);

@@ -2,106 +2,140 @@
 
 ## Introduction
 
-DOCARG is a documentation-oriented question answering system designed to answer user queries strictly from its own documentation.
+DOCARG is a documentation-first question answering system designed for reliability, traceability, and correctness.
 
-The system does not rely on the language model’s internal knowledge. Instead, it retrieves relevant documentation segments and uses a language model only to rephrase or summarize the retrieved content.
+The system ensures that every response is grounded strictly in documented knowledge.
 
-If a user’s question cannot be answered using the available documentation, the system explicitly responds that the information is not present.
+DOCARG is suitable for technical documentation, internal knowledge bases, and developer platforms.
 
-DOCARG is built to minimize hallucinations by enforcing strict grounding rules and treating documentation as the single source of truth.
+DOCARG treats documentation as the single source of truth.
+
+The system never allows the language model to invent answers or introduce undocumented information.
 
 ---
 
 ## Core Concepts
 
-DOCARG follows a retrieval-first approach, where documentation is always consulted before generating a response.
+DOCARG follows a retrieval-first paradigm.
 
-The system treats documentation as authoritative and complete. Answers are generated only if the documentation explicitly contains the required information.
+The system always retrieves documentation before attempting to generate an answer.
 
-A language model is used only as a formatting and summarization tool. It does not introduce new facts or assumptions.
+Documentation is treated as authoritative and complete.
 
-The system prioritizes correctness and traceability over conversational flexibility.
+The language model is used only as a rephrasing and summarization engine.
+
+DOCARG explicitly avoids speculative or creative responses.
+
+If documentation does not contain the answer, the system fails safely and explicitly.
+
+This design significantly reduces hallucinations compared to traditional chat-based systems.
 
 ---
 
 ## Retrieval Mechanism
 
-DOCARG retrieves information by converting documentation text into vector representations using a term-based retrieval method.
+DOCARG splits documentation into logical, paragraph-level segments.
 
-User queries are transformed using the same preprocessing steps as the documentation.
+Each segment is indexed independently for retrieval.
 
-Similarity between the user query and documentation segments is computed, and the most relevant segments are selected.
+Documentation undergoes text normalization and cleaning before indexing.
 
-Only the top matching documentation segments are passed forward for answer generation.
+TF-IDF vectorization is applied to all documentation segments.
+
+User queries are processed using the same preprocessing steps.
+
+Cosine similarity is used to rank documentation segments against the query.
+
+Only the most relevant documentation segments are selected.
+
+Only retrieved segments are passed to the generation layer.
 
 ---
 
-## Why TF-IDF (Current Design)
+## Why TF-IDF
 
-DOCARG uses TF-IDF as its retrieval method to maintain transparency and control.
+DOCARG intentionally avoids opaque embedding-based retrieval methods.
 
-TF-IDF allows clear inspection of why a particular documentation segment was retrieved.
+TF-IDF provides deterministic and explainable retrieval behavior.
 
-The approach avoids opaque vector representations that may retrieve semantically similar but contextually incorrect information.
+TF-IDF allows inspection of term importance and relevance.
 
-This design choice aligns with DOCARG’s goal of reducing hallucinations and ensuring explainability.
+Developers can trace exactly why a document was retrieved for a query.
+
+TF-IDF reduces operational complexity compared to embedding-based systems.
+
+This design choice prioritizes transparency over semantic approximation.
 
 ---
 
 ## Architecture
 
-DOCARG consists of a frontend documentation interface and a backend retrieval system.
+DOCARG follows a clean separation of concerns.
 
-The frontend displays structured documentation and provides an interface for users to ask questions.
+The frontend is responsible for navigation and user interface.
 
-The backend processes user queries, retrieves relevant documentation segments, and prepares grounded context.
+The backend is responsible for retrieval and grounding.
 
-The language model receives only retrieved documentation and produces a response based strictly on that content.
+Documentation serves as the authoritative knowledge source.
+
+The retriever selects relevant documentation segments.
+
+The language model generates responses constrained strictly by retrieved documentation.
+
+The language model does not introduce new facts.
 
 ---
 
 ## Design Decisions
 
-Documentation is treated as the single source of truth across the system.
+DOCARG prioritizes correctness over creativity.
 
-Retrieval is performed before any language model interaction.
+The system does not produce speculative responses.
 
-The system returns an explicit “I don’t know” response when documentation does not contain an answer.
+DOCARG does not use hidden or external data sources.
 
-The architecture favors simplicity, debuggability, and reliability over complexity.
+All answers must be traceable to explicit documentation segments.
+
+The system includes strict fallback behavior for missing information.
 
 ---
 
 ## Limitations
 
-DOCARG can only answer questions that are explicitly covered in its documentation.
+DOCARG cannot answer questions outside its documentation.
 
-The system does not infer or extrapolate beyond documented information.
+This limitation is intentional and by design.
 
-Answers may be limited in depth if the documentation itself is brief.
+The system does not infer unstated facts.
 
-The quality of responses is directly dependent on the quality of the documentation.
+DOCARG does not reason beyond available documentation.
+
+If documentation does not explicitly contain the answer, the system responds that the information is not available.
 
 ---
 
 ## API Reference
 
-The backend exposes an API endpoint that accepts a user query as input.
+DOCARG exposes a single query endpoint.
 
-The endpoint processes the query, retrieves relevant documentation segments, and generates a grounded response.
+The endpoint is a POST request to `/query`.
 
-If no relevant documentation is found, the API returns an explicit indication that the answer is unavailable.
+The endpoint accepts a natural language question.
 
-All responses are traceable to retrieved documentation content.
+The endpoint returns a grounded answer derived from documentation.
+
+The response includes source or retrieval metadata when applicable.
 
 ---
 
 ## Error Handling
 
-If documentation retrieval fails, the system returns a safe error response.
+DOCARG is designed to fail safely and transparently.
 
-If no relevant documentation is found, the system responds that the information is not present.
+If no relevant documentation is retrieved, no generation occurs.
 
-The system avoids partial or speculative answers under all failure conditions.
+If documentation is missing, the system explicitly refuses to answer.
 
-Errors are handled gracefully to maintain system reliability and user trust.
+Errors are logged for traceability and debugging.
+
+The system prioritizes safety over partial or guessed answers.

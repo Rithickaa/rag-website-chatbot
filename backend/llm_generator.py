@@ -1,5 +1,5 @@
 import os
-from groq import Groq
+from groq import Groq, APITimeoutError, APIConnectionError
 
 
 class LLMGenerator:
@@ -14,9 +14,10 @@ class LLMGenerator:
         """
         Generates an answer strictly from retrieved documentation.
         Allows summarization across multiple documentation statements.
+        Falls back safely if the LLM fails.
         """
 
-        # HARD GUARD
+        # 🔒 HARD GUARD — DOCARG rule
         if not contexts:
             return "I don’t know based on the given documentation."
 
@@ -43,10 +44,16 @@ class LLMGenerator:
             },
         ]
 
-        response = self.client.chat.completions.create(
-            model="llama-3.1-8b-instant",
-            messages=messages,
-            temperature=0.2,
-        )
+        try:
+            response = self.client.chat.completions.create(
+                model="llama-3.1-8b-instant",  # ✅ supported model
+                messages=messages,
+                temperature=0.2,
+                timeout=15,  # ⏱️ prevents hanging / crashes
+            )
 
-        return response.choices[0].message.content.strip()
+            return response.choices[0].message.content.strip()
+
+        except (APITimeoutError, APIConnectionError):
+            # 🔁 SAFE FALLBACK — still documentation-grounded
+            return contexts[0]

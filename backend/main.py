@@ -10,7 +10,6 @@ from backend.llm_generator import LLMGenerator
 
 app = FastAPI(title="DOCARG Backend")
 
-# ✅ CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],
@@ -19,7 +18,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# These will be initialized on startup
 retriever: TfidfRetriever | None = None
 generator: LLMGenerator | None = None
 
@@ -30,62 +28,69 @@ class QueryRequest(BaseModel):
 
 @app.on_event("startup")
 def startup_event():
-    """
-    Initialize retriever and generator exactly once on startup.
-    DOCS is a list of answer-complete documentation chunks.
-    """
     global retriever, generator
-
-    print("✅ DOCARG documentation loaded")
-    print(f"📄 Total documentation chunks: {len(DOCS)}")
-
     retriever = TfidfRetriever(DOCS)
     generator = LLMGenerator()
-
-    print("✅ TF-IDF retriever initialized")
-    print("✅ LLM generator initialized")
-
-
-@app.get("/")
-def read_root():
-    return {"status": "DOCARG backend running"}
 
 
 @app.post("/query")
 def query_docs(request: QueryRequest):
-    retrieved = retriever.retrieve(request.question, top_k=3)
+    question = request.question
 
-    # 🔒 Safe failure: nothing relevant found
-    if not retrieved:
+    # 1️⃣ TF-IDF retrieval
+    retrieved = retriever.retrieve(question, top_k=5)
+
+    # 2️⃣ Infer defining section from question intent
+    inferred_section = retriever.infer_section_from_question(question)
+
+    # 3️⃣ FORCE include defining section docs (CRITICAL FIX)
+    section_docs = []
+    if inferred_section:
+        section_docs = [
+            d for d in DOCS if d["section"] == inferred_section
+        ]
+
+    # 4️⃣ Merge section docs + TF-IDF results (deduplicated)
+    combined = []
+    seen = set()
+
+    for item in section_docs + retrieved:
+        key = (item["section"], item["content"])
+        if key not in seen:
+            combined.append(item)
+            seen.add(key)
+
+    if not combined:
         return {
-            "question": request.question,
+            "question": question,
             "answer": "I don’t know based on the given documentation.",
             "sources": [],
         }
 
-    contexts = [item["content"] for item in retrieved]
+    # 5️⃣ Pass COMPLETE authoritative context to LLM
+    contexts = [c["content"] for c in combined]
 
     answer = generator.generate_answer(
-        question=request.question,
+        question=question,
         contexts=contexts,
     )
 
-    # 🔹 Log only the top retrieval result
-    top_result = retrieved[0]
+    # 6️⃣ Correct source attribution
+    source_section = inferred_section or combined[0]["section"]
+
     log_query(
-        query=request.question,
-        top_section=top_result["section"],
-        score=top_result["score"],
+        query=question,
+        top_section=source_section,
+        score=combined[0].get("score", 1.0),
     )
 
-    # 🔹 Return only the primary source for clean UX
     return {
-        "question": request.question,
+        "question": question,
         "answer": answer,
         "sources": [
             {
-                "section": top_result["section"],
-                "score": top_result["score"],
+                "section": source_section,
+                "score": combined[0].get("score", 1.0),
             }
         ],
     }
