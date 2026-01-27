@@ -1,15 +1,18 @@
-# DOCARG – Documentation-Oriented RAG Website Chatbot
+# DOCARG – Document-Oriented Argumentation & Retrieval Generation (RAG) Website Chatbot
 
-DOCARG is a **documentation-first Retrieval-Augmented Generation (RAG) system** that answers user questions strictly based on its own documentation.  
+DOCARG is a **documentation-first Retrieval-Augmented Generation (RAG) system** that answers user questions strictly based on curated documentation.  
 It is designed to **eliminate hallucinations** by treating documentation as the single source of truth.
 
-Unlike typical RAG systems that rely heavily on LLM knowledge, DOCARG retrieves explicit documentation segments and uses an LLM **only for rephrasing and summarization**, never for introducing new information.
+In this project, *argumentation* refers to generating **well-grounded, explainable responses derived entirely from retrieved documents**, not debate-style or opinion-based arguments.
+
+Unlike typical RAG systems that rely heavily on an LLM’s internal knowledge, DOCARG retrieves explicit documentation segments and uses an LLM **only for rephrasing and summarization**, never for introducing new information.
 
 ---
 
 ## 🔍 Key Idea
 
-> If the documentation does not explicitly contain the answer, the system clearly responds with **“I don’t know based on the given documentation.”**
+> If the documentation does not explicitly contain the answer, the system clearly responds with  
+> **“I don’t know based on the given documentation.”**
 
 This makes DOCARG reliable, transparent, and suitable for real-world documentation websites.
 
@@ -25,7 +28,7 @@ This makes DOCARG reliable, transparent, and suitable for real-world documentati
 - 🛑 Safe failure when information is missing
 - 🗂️ Query logging for retrieval transparency
 - 🌐 Designed to work with a **React documentation frontend**
-- ⚙️ FastAPI backend (deployment-ready)
+- ⚙️ FastAPI backend designed for independent deployment
 
 ---
 
@@ -34,26 +37,25 @@ This makes DOCARG reliable, transparent, and suitable for real-world documentati
 1. Documentation is written as **explicit, answer-complete statements**
 2. Documentation is chunked at paragraph level
 3. TF-IDF vectors are generated from documentation
-4. User query is vectorized using the same pipeline
+4. User queries are vectorized using the same pipeline
 5. Top relevant chunks are retrieved using cosine similarity
-6. LLM rephrases retrieved content **without adding new facts**
-7. Response includes **source section attribution**
+6. The LLM rephrases retrieved content **without adding new facts**
+7. Responses include **source section attribution**
 
 ---
 
 ## 🛠️ Tech Stack
 
-**Backend**
+### Backend
 - Python
 - FastAPI
 - TF-IDF (scikit-learn)
 - Sentence preprocessing (stemming, n-grams)
 - Uvicorn
 
-**Frontend**
+### Frontend
 - React (documentation website)
 - Floating “Ask AI” chatbot
-
 
 ---
 
