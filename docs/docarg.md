@@ -1,3 +1,13 @@
+> ⚠️ **Important Note**
+>
+> This Markdown file is maintained for **human-readable documentation and design clarity only**.
+>
+> The **runtime single source of truth** for DOCARG is:
+>
+> `backend/docs_source.py`
+>
+> All retrieval, grounding, and answer generation are based strictly on that file.
+
 # DOCARG Documentation
 
 ## Introduction
