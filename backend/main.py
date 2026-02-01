@@ -2,10 +2,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from backend.logger import log_query
-from backend.docs_source import DOCS
-from backend.tfidf_retriever import TfidfRetriever
-from backend.llm_generator import LLMGenerator
+from logger import log_query
+from docs_source import DOCS
+from tfidf_retriever import TfidfRetriever
+from llm_generator import LLMGenerator
 
 
 app = FastAPI(title="DOCARG Backend")
