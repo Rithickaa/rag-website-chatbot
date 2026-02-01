@@ -12,11 +12,12 @@ app = FastAPI(title="DOCARG Backend")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["*"],  # allow all for now
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 retriever: TfidfRetriever | None = None
 generator: LLMGenerator | None = None
