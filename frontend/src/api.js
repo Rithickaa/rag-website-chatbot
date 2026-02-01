@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:8000/query";
+const API_URL = "https://rag-website-chatbot.onrender.com/query";
 
 export async function askDocarg(question) {
   const response = await fetch(API_URL, {
