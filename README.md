@@ -1,5 +1,8 @@
 # DOCARG – Document-Oriented Argumentation & Retrieval Generation (RAG) Website Chatbot
 
+🚀 **Live Demo:** https://rag-website-chatbot.vercel.app/  
+📖 Production-ready documentation-first RAG system with strict source grounding.
+
 DOCARG is a **documentation-first Retrieval-Augmented Generation (RAG) system** that answers user questions strictly based on curated documentation.  
 It is designed to **eliminate hallucinations** by treating documentation as the single source of truth.
 
